@@ -120,13 +120,11 @@ app.get("/projects",function(req,res){
     var tags=["webdev","ml"]
      for (var i = 0; i<questions.length ; i++) {
        for(var j = 0; j<questions[i].tags.length ; j++){
-          console.log(questions[i].tags[j]);
           if(tags.includes(questions[i].tags[j])){
             ques.push(questions[i])
           }
         }
       }
-    console.log(ques);
     res.render("projects",{projects:ques,current:req.user})
   })
 })
@@ -146,6 +144,7 @@ app.post("/project/:id/vote",function(req,res){
 
 app.get("/project/:id",function(req,res){
   question.findById(req.params.id).exec(function(err,ques){
+    console.log(ques);
     res.render("project_page",{project:ques})
   })
 })
@@ -156,8 +155,9 @@ app.post("/project/:id/comment",function(req,res){
       console.log("error",err)
       res.redirect("/")
     }else{
-      data.comments.push(req.body.comment)
+      data.answers.push([req.body.answer,req.user._id,req.user.username])
       data.save()
+      res.redirect("/project/"+req.params.id)
     }
   })
 })
