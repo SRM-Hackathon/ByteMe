@@ -39,6 +39,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/secret", isLoggedIn, function(req, res) {
+  console.log(req.user)
   res.render("secret");
 });
 
@@ -60,6 +61,7 @@ app.get("/register", function(req, res) {
 
 app.post("/register", function(req, res) {
   var tags = req.body.tags.split(",")
+  console.log(req.body.name,req.body.username,tags)
   user.register(new user({
     username: req.body.username,
     name:req.body.name,
@@ -90,20 +92,74 @@ app.get("/user/:id",isLoggedIn,function(req,res){
   })
 })
 
-app.get("/projects",isloggedin,function(req,res){
+app.get("/projectform", function(req,res){
+  res.render("question",{current:req.user})
+})
+
+
+app.post("/projects",isLoggedIn,function(req,res){
+  var author = req.user.username
+  var tags = req.body.tags.split(",")
+  question.create({author:author,title:req.body.title,tags:tags},function(err,ground){
+    if(err)
+      console.log("error is created")
+    else{
+      console.log("created",ground)
+      res.redirect("projects")
+    }
+  })
+})
+
+app.get("/projects",isLoggedIn,function(req,res){
   question.find({},function(err,questions){
     if (err){
       res.render("/")
     }
     qeus=[]
     questions.map(function(v){
-      v.tags.foreach(function(s){
-        if req.user.tags.contains(s){
+      v.tags.map(function(s){
+        if(req.user.tags.includes(s)){
           ques.add(v)
         }
       })
     })
     res.render("/questions",{projects:ques})
+  })
+})
+
+
+app.post("/project/:id/vote/:vote",function(req,res){
+  var body = req.body
+  if(req.params.vote){
+    body.votes+=1
+  }
+  else{
+    body.votes-=1
+  }
+  question.findOneAndUpdate({id:req.params.id},body,function(err, doc){
+    if(err)
+      res.send(500,{error:err})
+    else
+      res.send("success upvote")
+  })
+})
+
+
+app.get("/project/:id",function(req,res){
+  question.findById(req.params.id).exec(function(err,ques){
+    res.render("project_page",{project:ques})
+  })
+})
+
+app.post("/project/:id/comment",function(req,res){
+  question.findById(req.params.id,function(err,data){
+    if(err){
+      console.log("error",err)
+      res.redirect("/")
+    }else{
+      data.comments.push(req.body.comment)
+      data.save()
+    }
   })
 })
 
@@ -116,6 +172,7 @@ function isLoggedIn(req, res, next) {
   }
   res.redirect("/login");
 }
+
 
 app.listen(3000, function() {
   console.log("Server Started");

@@ -3,10 +3,14 @@ var mongoose = require("mongoose");
 var questionSchema = new mongoose.Schema({
   author:{
       type:String
-  }
+  },
   title:{
       type:String,
       required:true
+  },
+  proposal:{
+    type:String,
+    required:true
   },
   tags:[{
       type:String,
