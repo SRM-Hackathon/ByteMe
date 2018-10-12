@@ -1,0 +1,39 @@
+<head>
+	<title>EduNET</title>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+<h1>view all the questions page</h1>
+ <%projects.forEach(function(project){  %>
+
+<div>
+	<h2><%=project.title%></h2>
+	<p><%=project.proposal%></p>
+	<button id="upvote_<%=project._id%>">upvote</button>
+	<a href="/project/<%=project._id%>">yoletsgo</a>
+</div>
+<hr>
+<%})%>
+<ul>
+    <li><a href="/register">Sign Up</a></li>
+    <li><a href="/login">Log In</a></li>
+    <li><a href="/logout">Log Out</a></li>
+</ul>
+<script type="text/javascript">
+	$("button").click(function(event){
+		event.preventDefault()
+		id = $(this).attr("id")
+		uri = id.split("_")[1]
+		$.ajax({
+			global:False,
+			type:'POST',
+			url:/project/id/vote,
+			dataType:'html',
+			data:"upvote",
+		},
+		success:{}
+		)
+	})
+</script>

@@ -12,7 +12,6 @@ app.use(function(req,res,next){
   next();
 });
 
-
 mongoose.connect("mongodb://deval:deval1@ds231133.mlab.com:31133/edunet");
 
 app.use(bodyParser.urlencoded({
@@ -100,9 +99,9 @@ app.get("/projectform", function(req,res){
 app.post("/projects",isLoggedIn,function(req,res){
   var author = req.user.username
   var tags = req.body.tags.split(",")
-  question.create({author:author,title:req.body.title,tags:tags},function(err,ground){
+  question.create({author:author,title:req.body.title,proposal:req.body.proposal,tags:tags},function(err,ground){
     if(err)
-      console.log("error is created")
+      console.log("error is created",err)
     else{
       console.log("created",ground)
       res.redirect("projects")
@@ -110,32 +109,32 @@ app.post("/projects",isLoggedIn,function(req,res){
   })
 })
 
-app.get("/projects",isLoggedIn,function(req,res){
+app.get("/projects",function(req,res){
   question.find({},function(err,questions){
     if (err){
+      console.log("error has taken place",err)
       res.render("/")
     }
-    qeus=[]
-    questions.map(function(v){
-      v.tags.map(function(s){
-        if(req.user.tags.includes(s)){
-          ques.add(v)
+    
+    var ques=[]
+    var tags=["webdev","ml"]
+     for (var i = 0; i<questions.length ; i++) {
+       for(var j = 0; i<questions[i].tags ; j++){
+          console.log(questions[i].tags[j]);
+          if(tags.includes(questions[i].tags[j])){
+            ques.push(questions)
+          }
         }
-      })
-    })
-    res.render("/questions",{projects:ques})
+      }
+    console.log(ques);
+    res.render("projects",{projects:ques,current:req.user})
   })
 })
 
 
-app.post("/project/:id/vote/:vote",function(req,res){
+app.post("/project/:id/vote",function(req,res){
   var body = req.body
-  if(req.params.vote){
-    body.votes+=1
-  }
-  else{
-    body.votes-=1
-  }
+  body.votes-=1
   question.findOneAndUpdate({id:req.params.id},body,function(err, doc){
     if(err)
       res.send(500,{error:err})

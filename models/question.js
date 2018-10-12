@@ -22,7 +22,6 @@ var questionSchema = new mongoose.Schema({
   },
   answers:[{
       type:String,
-      required:true,
       userID:{
           type:mongoose.Schema.Types.ObjectId,
           ref: "user"
