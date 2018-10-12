@@ -119,10 +119,10 @@ app.get("/projects",function(req,res){
     var ques=[]
     var tags=["webdev","ml"]
      for (var i = 0; i<questions.length ; i++) {
-       for(var j = 0; i<questions[i].tags ; j++){
+       for(var j = 0; j<questions[i].tags.length ; j++){
           console.log(questions[i].tags[j]);
           if(tags.includes(questions[i].tags[j])){
-            ques.push(questions)
+            ques.push(questions[i])
           }
         }
       }

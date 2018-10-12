@@ -12,6 +12,7 @@
 	<h2><%=project.title%></h2>
 	<p><%=project.proposal%></p>
 	<button id="upvote_<%=project._id%>">upvote</button>
+	<p id="<%=project._id%>"><%=project.upvotes%></p>
 	<a href="/project/<%=project._id%>">yoletsgo</a>
 </div>
 <hr>
@@ -23,17 +24,26 @@
 </ul>
 <script type="text/javascript">
 	$("button").click(function(event){
+		console.log("test");
 		event.preventDefault()
-		id = $(this).attr("id")
-		uri = id.split("_")[1]
+		 id = $(this).attr("id")
+		 uri = id.split("_")[1]
+		 $("#"+uri).text(function(votes){
+		 	return parseInt(votes)+1+""
+		 })
+
 		$.ajax({
-			global:False,
-			type:'POST',
-			url:/project/id/vote,
-			dataType:'html',
-			data:"upvote",
-		},
-		success:{}
-		)
+        global: false,
+        type: 'POST',
+        url:'/projects/'+uri+'/vote',
+        dataType: 'html',
+        data:"votes",
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (request, status, error) {
+            console.log("error has taken place",error);
+        }
+    });
 	})
 </script>
