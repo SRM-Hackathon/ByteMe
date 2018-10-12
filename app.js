@@ -90,14 +90,20 @@ app.get("/user/:id",isLoggedIn,function(req,res){
   })
 })
 
-app.get("/user/:id",isloggedin,function(req,res){
+app.get("/projects",isloggedin,function(req,res){
   question.find({},function(err,questions){
+    if (err){
+      res.render("/")
+    }
     qeus=[]
     questions.map(function(v){
       v.tags.foreach(function(s){
-        if req.user.tags.contains(s)
+        if req.user.tags.contains(s){
+          ques.add(v)
+        }
       })
     })
+    res.render("/questions",{projects:ques})
   })
 })
 
