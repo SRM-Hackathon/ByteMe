@@ -1,0 +1,30 @@
+var mongoose = require("mongoose");
+
+var questionSchema = new mongoose.Schema({
+  title:{
+      type:String,
+      required:true
+  },
+  tags:[{
+      type:String,
+      required:true
+  }],
+  date:{
+      type:Date,
+      default:Date.now()
+  },
+  answers:[{
+      type:String,
+      required:true,
+      userID:{
+          type:mongoose.Schema.Types.ObjectId,
+          ref: "user"
+      }
+  }],
+  upvotes:{
+      type:Number,
+      default:0       
+  }
+});
+
+module.exports = mongoose.model("question", questionSchema);
