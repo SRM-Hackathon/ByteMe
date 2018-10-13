@@ -125,11 +125,6 @@ body, html
     <div class="col s12 ">
       <div class="card-panel teal">
         <span class="white-text" style="font-size: 20px"><%=project.proposal %>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-        
         </span>
       </div>
     </div>
@@ -138,6 +133,7 @@ body, html
   <label  style="float:left; margin-left:10px;margin-top:0px">
     <button id="btn" type="button" name='btn_login' class='col s12  btn btn-large waves-effect deep-orange'>UPVOTE <%=project.upvotes%></button>
   </label> 
+  <p style="float:right;"><a href="/userauth/<%=project.author%>"><%=project.author%></a></p>
 </div>
   <div class="row" style="margin-bottom: 0px; margin-top: 50px">
   <label>
@@ -148,9 +144,9 @@ body, html
   <% project.answers.forEach(function(v){ %>
 
     <li class="collection-item avatar" style="margin-left:10px; margin-right:10px">
-      <img src="images/yuna.jpg" alt="" class="circle">
+      <i class="material-icons circle red">play_arrow</i>
       <span class="title" style="font-size: 25px; margin: 10px"><b><%=v.split(",")[0]%></b></span>
-      <p style="font-size: 18px"><%=v.split(",")[2]%></p> 
+      <p style="font-size: 18px; margin:10px;"><%=v.split(",")[2]%></p> 
     </li>
   <% }) %>
     

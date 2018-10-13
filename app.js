@@ -186,6 +186,17 @@ app.get("/user/:id",function(req,res){
   })
 })
 
+app.get("/userauth/:id",function(req,res){
+  user.findOne({username:req.params.id},function(err,data){
+    if (err) {
+      console.log("error has taken else",err);
+    }else{
+      console.log(data);
+      res.redirect("/user/"+data._id)
+    }
+  })
+})
+
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
