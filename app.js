@@ -118,12 +118,12 @@ app.get("/projects",function(req,res){
       console.log("error has taken place",err)
       res.render("/")
     }
-    
+    console.log(req.user);
     var ques=[]
     var tags=["webdev","ml"]
      for (var i = 0; i<questions.length ; i++) {
        for(var j = 0; j<questions[i].tags.length ; j++){
-          if(tags.includes(questions[i].tags[j])){
+          if(req.user.tags.includes(questions[i].tags[j])){
             ques.push(questions[i])
           }
         }
@@ -197,6 +197,6 @@ function isLoggedIn(req, res, next) {
 }
 
 
-app.listen(3000, function() {
-  console.log("Server Started");
+app.listen(8080, function() {
+  console.log("Server Started",8080);
 });
