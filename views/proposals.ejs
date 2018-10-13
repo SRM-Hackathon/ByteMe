@@ -1,0 +1,93 @@
+<html>
+<head>
+
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Dogfalo/materialize/master/dist/css/materialize.min.css">
+	<style type="text/css">
+
+body, html
+{
+	background-color: #EDEDED !important;
+}
+
+
+.intro
+{
+  text-align: center;
+  padding-top: .25%;
+  padding-bottom: .25%;
+  margin-left:.5%;
+  margin-right:.5%;
+  margin-top:1%; 
+}
+
+.about .card
+{
+	text-align: center;
+}
+	</style>
+
+</head>
+<body>
+
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+      <a href="#" class="brand-logo center">EduNet</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Home</a></li>
+        <li><a href="/">Add Proposal</a></li>
+        <li><a href="collapsible.html">Profile</a></li>
+        <li><a href="/login">Profile</a></li>
+        <li><a href="/logout" class="waves-effect waves-light btn red">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="intro">
+    <h3 class="black-text text-lighten-4"><b>PROPOSALS</b></h3>
+</div>
+<% projects.forEach(function(v){ %>
+  
+<div class="row">
+    <div class="col s12">
+    	<div class="card teal">
+      <div class="card-content white-text">
+          <span class="card-title" style="font-size: 30px"> <span class="new badge blue" data-badge-caption="Upvotes" style="font-size: 16px;">4</span><%=v.title %></span>
+        <p style="font-size: 20px"><%=v.proposal%></p>
+    </div>
+     <div class="card-action">
+          <a href="/project/<%=v.id%>">Read More</a>
+          <a href="/project/<%=v.author%>" style="float:right"><%=v.author%></a>
+        </div>
+      </div>
+    </div>
+</div>
+<% }) %>
+
+
+<footer  class="page-footer deep-orange lighten-1">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">EduNet</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">About us!</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Careers</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Connect with Us</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Feedback</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+</footer>
+     
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
+<script src="https://cdn.rawgit.com/Dogfalo/materialize/master/dist/js/materialize.min.js"/>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+	"db": {
+		"username": "vikram",
+		"password": "vikram1",
+		"host": "ds229458.mlab.com",
+		"port": "29458",
+		"name": "chatapp"
+	},
+	"sessionSecret": "RandomString",
+	"facebook": {
+		"clientID": "274558113400031",
+		"clientSecret": "a247c935553d6f3531aeedccfb1c75c7",
+		"callbackURL": "/auth/facebook/callback",
+		"profileFields": ["id", "displayName", "photos"]
+	},
+	"twitter": {
+		"consumerKey": "KKBIawUSE_OWNPJwM",
+		"consumerSecret": "BJCahJjoUSE_OWNTStPFAj",
+		"callbackURL": "/auth/twitter/callback",
+		"profileFields": ["id", "displayName", "photos"]
+	},
+	"redis": {
+		"host": "127.0.0.1",
+		"port": 6379,
+		"password": ""
+	}
+}

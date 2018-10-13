@@ -34,7 +34,10 @@ passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
 app.get("/", function(req, res) {
-  res.render("home");
+  if (!req.user)
+    res.render("login");
+  else
+    res.redirect("/projects")
 });
 
 app.get("/secret", isLoggedIn, function(req, res) {
@@ -48,7 +51,7 @@ app.get("/login", function(req, res) {
 
 //middleware is used to execute before the call back function, itis executed as soon as the route request is made and before the callback execution
 app.post("/login", passport.authenticate("local", {
-  successRedirect: "/secret",
+  successRedirect: "/projects",
   failureRedirect: "/login"
 }), function(req, res) {
     res.render("home")
@@ -70,7 +73,7 @@ app.post("/register", function(req, res) {
       console.log(err);
     }
     passport.authenticate("local")(req, res, function() {
-      res.redirect("/secret");
+      res.redirect("/projects");
     });
   });
 });
@@ -92,7 +95,7 @@ app.get("/logout", function(req, res) {
 // })
 
 app.get("/projectform", function(req,res){
-  res.render("question",{current:req.user})
+  res.render("postquestion",{current:req.user})
 })
 
 
@@ -125,7 +128,7 @@ app.get("/projects",function(req,res){
           }
         }
       }
-    res.render("projects",{projects:ques,current:req.user})
+    res.render("proposals",{projects:ques,current:req.user})
   })
 })
 
