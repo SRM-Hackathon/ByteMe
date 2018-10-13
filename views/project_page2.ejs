@@ -1,0 +1,22 @@
+<h1><%=project.title%></h1>
+<p><%=project.proposal%></p>
+<% project.tags.forEach(function(tag){ %>
+	<p><%=tag%></p>p>
+<%})%>
+<% project.answers.forEach(function(comment){ %>
+	<hr>
+	<h3><%=comment%></h3>
+
+<% }) %>
+
+<form action="/project/<%=project._id%>/comment" method="POST">
+	<input type="text" name="answer">
+	<button type="submit">submit comment</button>
+</form>
+
+
+<ul>
+    <li><a href="/register">Sign Up</a></li>
+    <li><a href="/login">Log In</a></li>
+    <li><a href="/logout">Log Out</a></li>
+</ul>

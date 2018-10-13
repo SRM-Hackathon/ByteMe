@@ -81,15 +81,15 @@ app.get("/logout", function(req, res) {
   res.redirect("/")
 });
 
-app.get("/user/:id",isLoggedIn,function(req,res){
-  user.findById(req.params.id).exec(function(err,userfound){
-    if(err){
-      console.log(err)
-    }else{
-      res.render("user",{user:userfound,current:req.user})
-    }
-  })
-})
+// app.get("/user/:id",isLoggedIn,function(req,res){
+//   user.findById(req.params.id).exec(function(err,userfound){
+//     if(err){
+//       console.log(err)
+//     }else{
+//       res.render("user",{user:userfound,current:req.user})
+//     }
+//   })
+// })
 
 app.get("/projectform", function(req,res){
   res.render("question",{current:req.user})
@@ -159,6 +159,21 @@ app.post("/project/:id/comment",function(req,res){
       data.save()
       res.redirect("/project/"+req.params.id)
     }
+  })
+})
+
+app.get("/user/:id",function(req,res){
+  var id={}
+  user.findById(req.params.id,function(err,data){
+    id.name = data.name
+    id.username = data.username
+    id.tags =data.tags
+    console.log(id.tags);
+    question.find({author:data.username},function(err,questions) {
+      id.questions = questions
+      console.log(id);
+      res.render("profile",{id:id})
+    })
   })
 })
 
