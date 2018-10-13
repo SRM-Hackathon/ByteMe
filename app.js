@@ -136,12 +136,18 @@ app.get("/projects",function(req,res){
 app.post("/project/:id/vote",function(req,res){
   var body = req.body
   body.votes-=1
-  question.findOneAndUpdate({_id:req.params.id},{$inc:{'question.upvotes':1}},function(err, doc){
-    if(err)
-      res.send(500,{error:err})
-    else
-      res.send("success upvote")
+  question.findById(req.params.id,function(err,data){
+    data.upvotes+=1
+    data.save()
+    res.send(200)
   })
+
+  // question.findOneAndUpdate({_id:req.params.id},{$inc:{question.upvotes:1}},function(err, doc){
+  //   if(err)
+  //     res.send(500,{error:err})
+  //   else
+  //     res.send("success upvote")
+  // })
 })
 
 
