@@ -4,8 +4,49 @@
   	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Dogfalo/materialize/master/dist/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<style type="text/css">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	<script type="text/javascript">
+  $(document).ready(function(){
+    var flag =0
+    $("#btn").click(function(event){
+    if(flag==0){
+    console.log("test");
+    event.preventDefault()
+     data = $("#btn").text()
 
+     vote = data.split(" ")[1]
+     number=parseInt(vote)
+     number++
+     flag=1
+     data ="UPVOTE "+number
+     console.log(data)
+     $("#btn").html(data)
+    
+     uri = $("#data").text()
+    $.ajax({
+        global: false,
+        type: 'POST',
+        url:'/project/'+uri+'/vote',
+        dataType: 'html',
+        data:"votes",
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (request, status, error) {
+            console.log("error has taken place",error );
+        }
+    })
+  }
+  })
+  })
+  
+</script>
+
+  <style type="text/css">
+  
 body, html
 {
 	background-color: #EDEDED !important;
@@ -95,7 +136,7 @@ body, html
   </div>
   <div class="row">
   <label  style="float:left; margin-left:10px;margin-top:0px">
-    <button id="btn" name='btn_login' class='col s12  btn btn-large waves-effect deep-orange'>UPVOTE <%=project.upvotes%></button>
+    <button id="btn" type="button" name='btn_login' class='col s12  btn btn-large waves-effect deep-orange'>UPVOTE <%=project.upvotes%></button>
   </label> 
 </div>
   <div class="row" style="margin-bottom: 0px; margin-top: 50px">
@@ -117,15 +158,14 @@ body, html
   </div>
 
  <div class='row'>
-  <form action="/project/<%=project._id%>/comment">
+  <form action="/project/<%=project._id%>/comment" method="POST">
     <div class="input-field col s12 m10">
       <!-- <p class="teal-text" style="font-size: 1.3vw">Add New Comment:</p> -->
-      <textarea style="overflow-y: scroll ; resize:none;height: 100px;max-height: 100px" rows="30" cols="5" id="textarea2" class="materialize-textarea" placeholder="Add Comments"></textarea>
+      <!-- <textarea style="overflow-y: scroll ; resize:none;height: 100px;max-height: 100px" rows="30" cols="5" id="textarea2" class="materialize-textarea" name="answer" placeholder="Add Comments"></textarea> -->
+      <input type="text" name="answer" placeholder="add comment">
     </div>
     <div class="col s12 m2">
-      <label>
-        <button type='submit' name='btn_login' " class='col s12  btn btn-large waves-effect deep-orange'>Add Comment</button>
-      </label>
+        <button type='submit' class='col s12  btn btn-large waves-effect deep-orange'>Add Comment</button>
     </div>
   </form>
  </div>
@@ -135,33 +175,6 @@ body, html
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
 <script src="https://cdn.rawgit.com/Dogfalo/materialize/master/dist/js/materialize.min.js"/>
-<script type="text/javascript">
-  
-  alert("hello")
-  $("#btn").click(function(event){
-
-    console.log("test");
-    event.preventDefault()
-     $(this).html(function(data){
-      vote = data.split(" ")[1]
-      return "UPVOTE "+ parseInt(vote)+1
-     })
-     uri = $("#data").text()
-    $.ajax({
-        global: false,
-        type: 'POST',
-        url:'/project/'+uri+'/vote',
-        dataType: 'html',
-        data:"votes",
-        success: function (result) {
-            console.log(result);
-        },
-        error: function (request, status, error) {
-            console.log("error has taken place",error );
-        }
-    });
-  })
-</script>
 </body>
 </html>
 
