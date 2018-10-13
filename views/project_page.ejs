@@ -95,8 +95,8 @@ body, html
   </div>
   <div class="row">
   <label  style="float:left; margin-left:10px;margin-top:0px">
-    <button type='submit' name='btn_login' " class='col s12  btn btn-large waves-effect deep-orange'>UPVOTE</button>
-  </label>
+    <button id="btn" name='btn_login' class='col s12  btn btn-large waves-effect deep-orange'>UPVOTE <%=project.upvotes%></button>
+  </label> 
 </div>
   <div class="row" style="margin-bottom: 0px; margin-top: 50px">
   <label>
@@ -130,6 +130,7 @@ body, html
   </form>
  </div>
 
+<p id="data" style="visibility: hidden;"><%=project._id%></p>
  
 
 
@@ -138,6 +139,33 @@ body, html
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
 <script src="https://cdn.rawgit.com/Dogfalo/materialize/master/dist/js/materialize.min.js"/>
+<script type="text/javascript">
+  
+  alert("hello")
+  $("#btn").click(function(event){
 
+    console.log("test");
+    event.preventDefault()
+     $(this).html(function(data){
+      vote = data.split(" ")[1]
+      return "UPVOTE "+ parseInt(vote)+1
+     })
+     uri = $("#data").text()
+    $.ajax({
+        global: false,
+        type: 'POST',
+        url:'/project/'+uri+'/vote',
+        dataType: 'html',
+        data:"votes",
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (request, status, error) {
+            console.log("error has taken place",error );
+        }
+    });
+  })
+</script>
 </body>
 </html>
+

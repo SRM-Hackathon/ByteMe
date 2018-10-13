@@ -110,7 +110,7 @@ app.post("/projects",isLoggedIn,function(req,res){
 })
 
 app.get("/projects",function(req,res){
-  question.find({},function(err,questions){
+  question.find({}).sort({upvotes:-1}).exec(function(err,questions){
     if (err){
       console.log("error has taken place",err)
       res.render("/")
@@ -133,7 +133,7 @@ app.get("/projects",function(req,res){
 app.post("/project/:id/vote",function(req,res){
   var body = req.body
   body.votes-=1
-  question.findOneAndUpdate({id:req.params.id},body,function(err, doc){
+  question.findOneAndUpdate({_id:req.params.id},{$inc:{'question.upvotes':1}},function(err, doc){
     if(err)
       res.send(500,{error:err})
     else
